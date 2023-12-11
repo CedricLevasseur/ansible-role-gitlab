@@ -39,21 +39,23 @@ gitlab_rails['backup_path'] = "{{ gitlab_backup_path }}"
 gitlab_rails['ldap_enabled'] = {{ gitlab_ldap_enabled | lower }}
 {% if gitlab_ldap_enabled %}
 gitlab_rails['ldap_servers'] = {
+{% for ldap in gitlab_ldaps %}
     'main' => {
-        'label' => 'LDAP',
-        'host' =>  '{{ gitlab_ldap_host }}',
-        'port' => {{ gitlab_ldap_port }},
-        'uid' => 'sAMAccountName',
-        'encryption' => '{{ gitlab_ldap_method }}',
-        'verify_certificates' => false,
-        'base' => '{{ gitlab_ldap_base }}',
-        'bind_dn' => '{{ gitlab_ldap_bind_dn }}',
-        'password' => '{{ gitlab_ldap_password }}',
-        'allow_username_or_email_login' => true,
+        'label' => '{{ ldap.label }}',
+        'host' =>  '{{ ldap.host }}',
+        'port' => '{{ ldap.port }}',
+        'uid' => '{{ ldap.uid }}|sAMAccountName',
+        'encryption' => '{{ ldap.method }}|simple_tls',
+        'verify_certificates' => '{{ ldap.verify_certificates }}|false',
+        'base' => '{{ ldap.base }}',
+        'bind_dn' => '{{ ldap.bind_dn }}',
+        'password' => '{{ ldap.password }}',
+        'allow_username_or_email_login' => '{{ ldap.allow_username_or_email_login }}|true',
         'tls_options' => {
             'ca_file' => '{{ gitlab_ca_file }}'
         }         
     }
+{% endfor %}
 }
 {% endif %}
 
