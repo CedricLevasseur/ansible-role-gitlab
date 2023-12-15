@@ -40,17 +40,17 @@ gitlab_rails['ldap_enabled'] = {{ gitlab_ldap_enabled | lower }}
 {% if gitlab_ldap_enabled %}
 gitlab_rails['ldap_servers'] = {
 {% for ldap in gitlab_ldaps %}
-    'main' => {
+    '{{ ldap.label }}' => {
         'label' => '{{ ldap.label }}',
         'host' =>  '{{ ldap.host }}',
         'port' => '{{ ldap.port }}',
-        'uid' => '{{ ldap.uid }}|sAMAccountName',
-        'encryption' => '{{ ldap.method }}|simple_tls',
-        'verify_certificates' => '{{ ldap.verify_certificates }}|false',
+        'uid' => '{{ ldap.uid }}',
+        'encryption' => '{{ ldap.method }}',
+        'verify_certificates' => '{{ ldap.verify_certificates }}',
         'base' => '{{ ldap.base }}',
         'bind_dn' => '{{ ldap.bind_dn }}',
         'password' => '{{ ldap.password }}',
-        'allow_username_or_email_login' => '{{ ldap.allow_username_or_email_login }}|true',
+        'allow_username_or_email_login' => '{{ ldap.allow_username_or_email_login }}',
         'tls_options' => {
             'ca_file' => '{{ gitlab_ca_file }}'
         }         
