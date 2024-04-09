@@ -59,6 +59,10 @@ gitlab_rails['ldap_servers'] = {
 }
 {% endif %}
 
+# For a restart witout error, do not remove theses lines 
+#See https://forum.gitlab.com/t/deprecation-warning-about-parameter-nowhere-to-be-found/102149
+# omnibus_gitconfig['system']" = { }
+
 # GitLab Nginx
 ## See https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/nginx.md
 {% if gitlab_nginx_listen_port is defined %}
