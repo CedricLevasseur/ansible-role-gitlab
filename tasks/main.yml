@@ -54,6 +54,7 @@
     gitlab-ctl reconfigure
     creates=/var/opt/gitlab/bootstrapped
   failed_when: false
+  when: force_stopped is undefined or not force_stopped
 
 - name: Create GitLab SSL configuration folder.
   file:
